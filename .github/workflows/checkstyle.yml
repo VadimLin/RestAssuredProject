@@ -1,4 +1,4 @@
-name: Checkstyle Verification
+name: Checkstyle
 
 on:
   push:
@@ -16,13 +16,13 @@ jobs:
 
     steps:
       - name: Checkout репозитория
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Установка JDK
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v3
         with:
           distribution: 'adopt'
-          java-version: '21'  # укажите нужную версию JDK
+          java-version: '17'  # укажите нужную версию JDK
 
       - name: Запуск Gradle проверки
         run: |
