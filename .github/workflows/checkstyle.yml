@@ -1,44 +1,30 @@
 name: Checkstyle
 
-on:
-  push:
-    branches:
-      - main
-      - master
-  pull_request:
-    branches:
-      - main
-      - master
+on: push
 
 jobs:
   checkstyle:
-    name: Run Checkstyle
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Set up JDK 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v3
         with:
           java-version: '21'
-          distribution: 'adopt'
+          distribution: 'temurin'
 
-      - name: Cache Gradle dependencies
-        uses: actions/cache@v4
+      - name: Cache Gradle packages
+        uses: actions/cache@v3
         with:
-          path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle', '**/gradle.lockfile') }}
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('gradle.lockfile') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
 
       - name: Run Gradle Checkstyle
-        run: ./gradlew checkstyleMain checkstyleTest --continue --max-workers=4
-
-      - name: Upload Checkstyle report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: checkstyle-report
-          path: build/reports/checkstyle/
+        run: ./gradlew check --console=plain
