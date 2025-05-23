@@ -19,12 +19,12 @@ checkstyle {
 
 }
 
-tasks.withType(Checkstyle) {
-    reports {
-        xml.required = true
-        html.required = false
-    }
-}
+// tasks.withType(Checkstyle) {
+//     reports {
+//         xml.required = true
+//         html.required = false
+//     }
+// }
 
 repositories {
     mavenCentral()
