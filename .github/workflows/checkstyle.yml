@@ -1,4 +1,4 @@
-name: Checkstyle
+name: CI
 
 on:
   push:
@@ -16,14 +16,15 @@ jobs:
       - name: Checkout репозитория
         uses: actions/checkout@v3
 
-      - name: Настройка JDK 11
+      - name: Настройка JDK
         uses: actions/setup-java@v3
         with:
-          java-version: '11'
-          distribution: 'adopt'
+          java-version: '21'  # укажите нужную версию Java
 
-      - name: Проверка зависимостей Gradle
-        run: ./gradlew dependencies
+      - name: Проверка зависимостей
+        run: |
+          ./gradlew --version
 
-      - name: Запуск Checkstyle
-        run: ./gradlew checkstyleMain checkstyleTest
+      - name: Запуск проверки Checkstyle
+        run: |
+          ./gradlew checkstyleMain checkstyleTest || exit 1
