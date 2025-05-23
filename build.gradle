@@ -21,8 +21,8 @@ checkstyle {
 
 tasks.withType(Checkstyle) {
     reports {
-        xml.required = false
-        html.required = true
+        xml.required = true
+        html.required = false
     }
 }
 
