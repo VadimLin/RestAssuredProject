@@ -11,6 +11,7 @@ public class ApplicationTest {
     @Test
     public void getApplications() {
         GetApplicationsResponse response = RequestProvider.getRequest(ApiConfig.requestSpecification(),
+                                                                      //GETAPPLICATIONENPOINT - разве это удобно читать ? GET_APPLICATION_ENPOINT 
                 ApiConfig.responseSpecification(), ApiEndpoints.GETAPPLICATIONENPOINT, GetApplicationsResponse.class);
 
         Assert.assertNotNull(response.getTotal());
