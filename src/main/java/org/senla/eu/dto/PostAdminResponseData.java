@@ -9,4 +9,5 @@ import lombok.Getter;
 public class PostAdminResponseData {
     @JsonProperty("staffid")
     private Integer staffId;
+
 }
