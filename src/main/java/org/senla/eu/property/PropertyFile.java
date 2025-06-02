@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class PropertyFile {
-    public static Properties property;
+    private static Properties property;
 
     static {
         try {
@@ -16,7 +16,6 @@ public class PropertyFile {
             System.out.println("Error: Properties file doesn't found!");
         }
     }
-
     public static String getProperty(String key) {
         return property.getProperty(key);
     }

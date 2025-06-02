@@ -1,20 +1,14 @@
 plugins {
     id 'java'
     id 'checkstyle'
-    id("com.diffplug.spotless") version "5.0.0"
+    id("com.diffplug.spotless") version "7.0.4"
 }
 
 group 'org.senla.eu'
 version '1.0-SNAPSHOT'
 
-spotless {
-    java {
-        googleJavaFormat()
-    }
-}
 
 checkstyle {
-    toolVersion = '10.12.4'
     configFile = file('config/checkstyle/checkstyle.xml')
 
 }
@@ -39,8 +33,11 @@ dependencies {
     implementation 'org.projectlombok:lombok:1.18.38'
     implementation group: 'org.testng', name: 'testng', version: '7.11.0'
     implementation 'org.apache.maven.plugins:maven-surefire-plugin:3.5.3'
-    implementation 'com.diffplug.spotless:spotless-plugin-gradle:7.0.3'
     implementation 'net.datafaker:datafaker:2.4.3'
+    implementation 'com.puppycrawl.tools:checkstyle:10.24.0'
+    testImplementation 'com.puppycrawl.tools:checkstyle:10.24.0'
+    compileOnly 'com.puppycrawl.tools:checkstyle:10.24.0'
+    runtimeOnly 'com.puppycrawl.tools:checkstyle:10.24.0'
 
 
 }

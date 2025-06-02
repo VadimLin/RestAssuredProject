@@ -1,8 +1,8 @@
 package org.senla.eu.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
+
 
 
 public record PostAdminRequest(
@@ -17,7 +17,5 @@ public record PostAdminRequest(
                                @JsonProperty("personalNumberOfPassport")
                                String personalNumberOfPassport,
                                @JsonProperty("dateofbirth")
-                               String dateOfBirth)
-{
-
+                               String dateOfBirth) {
 }

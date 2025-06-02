@@ -12,17 +12,23 @@ import java.time.LocalDate;
 
 public class AdminTest {
 
-    PostAdminRequest request;
+    private PostAdminRequest request;
+    public PostAdminRequest getRequest() {
+        return request;
+    }
 
     @BeforeTest
     public void setup() {
         Faker faker = new Faker();
+
+        final int numberForPhoneField = 9;
+        final int numberForPassportField = 8;
         request = new PostAdminRequest(
                 faker.name().firstName(),
                 faker.name().lastName(),
                 faker.funnyName().name(),
-                faker.number().digits(9),
-                faker.number().digits(8),
+                faker.number().digits(numberForPhoneField),
+                faker.number().digits(numberForPassportField),
                 LocalDate.now().toString()
         );
 
@@ -33,7 +39,7 @@ public class AdminTest {
         PostAdminResponse response = RequestProvider.postAdminRequest(
                 ApiConfig.requestSpecification(),
                 ApiConfig.responseSpecification(),
-                ApiEndpoints.POSTADMINENDPOINT,
+                ApiEndpoints.POST_ADMIN_ENDPOINT,
                 request,
                 PostAdminResponse.class);
         Assert.assertNotNull(response.getRequestId());

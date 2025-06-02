@@ -24,9 +24,10 @@ public class ApiConfig {
 
     public static ResponseSpecification responseSpecification() {
 
+         final int successfulResponseCode = 200;
         return new ResponseSpecBuilder()
                 .log(LogDetail.ALL)
-                .expectStatusCode(200)
+                .expectStatusCode(successfulResponseCode)
                 .build();
     }
 
