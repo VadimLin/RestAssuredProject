@@ -4,9 +4,10 @@ import org.senla.eu.client.ApiEndpoints;
 import org.senla.eu.client.RequestProvider;
 import org.senla.eu.dto.PostAdminRequest;
 import org.senla.eu.dto.PostAdminResponse;
-import org.testng.Assert;
+import org.senla.eu.dto.PostAdminResponseData;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import java.time.LocalDate;
 
@@ -42,7 +43,13 @@ public class AdminTest {
                 ApiEndpoints.POST_ADMIN_ENDPOINT,
                 request,
                 PostAdminResponse.class);
-        Assert.assertNotNull(response.getRequestId());
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertNotNull(response.getRequestId(), "RequestId is not null");
+        softAssert.assertFalse(response.getData().isEmpty(), "List data should not be empty");
+        PostAdminResponseData staffIdValue = response.getData().get(0);
+        softAssert.assertNotNull(staffIdValue.getStaffId(), "StaffId is not null");
+        softAssert.assertAll();
+
     }
 
 }
