@@ -9,8 +9,7 @@ version '1.0-SNAPSHOT'
 
 
 checkstyle {
-    configFile = file('config/checkstyle/checkstyle.xml')
-
+    configFile = rootProject.file('config/checkstyle/checkstyle.xml')
 }
 
  tasks.withType(Checkstyle) {
@@ -38,11 +37,12 @@ dependencies {
     testImplementation 'com.puppycrawl.tools:checkstyle:10.24.0'
     compileOnly 'com.puppycrawl.tools:checkstyle:10.24.0'
     runtimeOnly 'com.puppycrawl.tools:checkstyle:10.24.0'
-
-
 }
 
+
 test {
-    useTestNG()
+    useTestNG() {
+
+    }
 
 }

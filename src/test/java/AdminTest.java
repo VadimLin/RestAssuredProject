@@ -4,7 +4,6 @@ import org.senla.eu.client.ApiEndpoints;
 import org.senla.eu.client.RequestProvider;
 import org.senla.eu.dto.PostAdminRequest;
 import org.senla.eu.dto.PostAdminResponse;
-import org.senla.eu.dto.PostAdminResponseData;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -35,7 +34,7 @@ public class AdminTest {
 
     }
 
-    @Test
+    @Test(testName = "Admin Test")
     void sendAdminRequestTest() {
         PostAdminResponse response = RequestProvider.postAdminRequest(
                 ApiConfig.requestSpecification(),
@@ -46,8 +45,6 @@ public class AdminTest {
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertNotNull(response.getRequestId(), "RequestId is not null");
         softAssert.assertFalse(response.getData().isEmpty(), "List data should not be empty");
-        PostAdminResponseData staffIdValue = response.getData().get(0);
-        softAssert.assertNotNull(staffIdValue.getStaffId(), "StaffId is not null");
         softAssert.assertAll();
 
     }

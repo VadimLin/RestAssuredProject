@@ -7,7 +7,7 @@ import org.testng.asserts.SoftAssert;
 
 
 public class ApplicationTest {
-    @Test
+    @Test(testName = "Application Test")
     public void getApplications() {
         GetApplicationsResponse response = RequestProvider.getRequest(ApiConfig.requestSpecification(),
                 ApiConfig.responseSpecification(), ApiEndpoints.GET_APPLICATION_ENDPOINT, GetApplicationsResponse.class);

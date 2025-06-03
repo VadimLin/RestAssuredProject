@@ -55,7 +55,7 @@ public class UserTest {
                 faker.address().cityName());
         System.out.println("Request " + request);
     }
-    @Test
+    @Test (testName = "User Test")
     public void createUserRequestTest() {
         PostUserResponse response = RequestProvider.postUserRequest(ApiConfig.requestSpecification(),
                 ApiConfig.responseSpecification(), ApiEndpoints.POST_USER_ENDPOINT, request, PostUserResponse.class);

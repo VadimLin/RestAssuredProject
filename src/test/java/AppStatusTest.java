@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 public class AppStatusTest {
-    @Test
+    @Test (testName = "AppStatus Test")
     public void getApplStatus() {
 
          final int applId = 49730;
@@ -22,7 +22,6 @@ public class AppStatusTest {
         for (ApplStatusData statusData : response.getData()) {
             softAssert.assertNotNull(statusData.getDateOfApplication(), "dateOfApplication should not be null");
             softAssert.assertFalse(statusData.getDateOfApplication().isEmpty(), "dateOfApplication should not be empty");
-
 
             softAssert.assertNotNull(statusData.getStatusOfApplication(), "statusOfApplication should not be null");
             softAssert.assertFalse(statusData.getStatusOfApplication().isEmpty(), "statusOfApplication should not be empty");
