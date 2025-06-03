@@ -3,36 +3,60 @@ package org.senla.eu.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public record PostUserRequest(
+        @JsonProperty("mode")
         String mode,
-        String personalLastName,
+        @JsonProperty("personalFirstName")
         String personalFirstName,
+        @JsonProperty("personalLastName")
+         String personalLastName,
+        @JsonProperty("personalMiddleName")
         String personalMiddleName,
-        String personalPhoneNumber,
+        @JsonProperty("personalNumberOfPassport")
         String personalNumberOfPassport,
-        String personalAddress,
-        String citizenLastName,
-        String citizenFirstName,
-        String citizenMiddleName,
-        String citizenBirthDate,
-        String citizenNumberOfPassport,
-        String citizenGender,
-        String citizenAddress,
-        String dateOfMarriage,
-        String newLastName,
-        String anotherPersonLastName,
-        String anotherPersonFirstName,
-        String anotherPersonMiddleName,
+        @JsonProperty("personalPhoneNumber")
+         String personalPhoneNumber,
+        @JsonProperty("personalAddress")
+         String personalAddress,
+        @JsonProperty("anotherPersonFirstName")
+         String anotherPersonFirstName,
+        @JsonProperty("anotherPersonLastName")
+         String anotherPersonLastName,
+        @JsonProperty("anotherPersonMiddleName")
+         String anotherPersonMiddleName,
+        @JsonProperty("anotherPersonPassport")
+         String anotherPersonPassport,
         @JsonProperty("birth_of_anotoherPerson")
-        String birthOfAnotoherPerson,
-        String anotherPersonPassport,
+         String birthOfAnotherPerson,
         @JsonProperty("birth_place")
-        String birthPlace,
-        @JsonProperty("birth_mother")
-        String birthMother,
+         String birthPlace,
         @JsonProperty("birth_father")
-        String birthFather,
-        @JsonProperty("death_dateOfDeath,")
-        String deathDateOfDeath,
+         String birthFather,
+        @JsonProperty("birth_mother")
+         String birthMother,
+        @JsonProperty("birth_grandpa")
+         String birthGrandpa,
+        @JsonProperty("birth_grandma")
+         String birthGrandma,
+        @JsonProperty("newLastName")
+         String newLastName,
+        @JsonProperty("citizenFirstName")
+         String citizenFirstName,
+        @JsonProperty("citizenLastName")
+         String citizenLastName,
+        @JsonProperty("citizenMiddleName")
+         String citizenMiddleName,
+        @JsonProperty("citizenBirthDate")
+         String citizenBirthDate,
+        @JsonProperty("citizenNumberOfPassport")
+         String citizenNumberOfPassport,
+        @JsonProperty("citizenGender")
+         String citizenGender,
+        @JsonProperty("citizenAddress")
+         String citizenAddress,
+        @JsonProperty("dateOfMarriage")
+         String dateOfMarriage,
+        @JsonProperty("death_dateOfDeath")
+         String deathDateOfDeath,
         @JsonProperty("death_placeOfDeath")
-        String deathPlaceOfDeath) {
+         String deathPlaceOfDeath) {
 }

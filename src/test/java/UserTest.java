@@ -15,49 +15,54 @@ import java.util.Random;
 public class UserTest {
 
     private PostUserRequest request;
-
-    public PostUserRequest getRequest() {
-        return request;
-    }
     @BeforeTest
     public void setup() {
         Faker faker = new Faker();
 
+        final int numberForPhoneField = 8;
+        final int numberForPassportField = 7;
+        final int daysOfPeriod = 365 * 50;
+        final int days = 365;
 
         request = new PostUserRequest(
-                        "birth",
-                        faker.name().lastName(),
-                        faker.name().femaleFirstName(),
-                        faker.name().firstName(),
-                        faker.number().digits(9),
-                        faker.number().digits(8),
-                        faker.address().cityName(),
-                        faker.name().lastName(),
-                        faker.name().femaleFirstName(),
-                        faker.name().firstName(),
-                        LocalDate.now().minus(Period.ofDays((new Random().nextInt(365 * 50)))).toString(),
-                        faker.number().digits(8),
-                        faker.gender().binaryTypes(),
-                        faker.address().cityName(),
-                        LocalDate.now().minus(Period.ofDays((new Random().nextInt(365)))).toString(),
-                        faker.name().lastName(),
-                        faker.name().lastName(),
-                        faker.name().maleFirstName(),
-                        faker.name().firstName(),
-                        LocalDate.now().minus(Period.ofDays((new Random().nextInt(365 * 50)))).toString(),
-                        faker.number().digits(8),
-                        faker.address().cityName(),
-                        faker.name().fullName(),
-                        faker.name().fullName(),
-                        LocalDate.now().minus(Period.ofDays((new Random().nextInt(7)))).toString(),
-                        faker.address().cityName());
+                        "wedding",
+                faker.name().firstName(),
+                faker.name().lastName(),
+                faker.name().name(),
+                faker.number().digits(numberForPassportField),
+                faker.number().digits(numberForPhoneField),
+                faker.address().streetAddress(),
+                faker.name().firstName(),
+                faker.name().lastName(),
+                faker.name().name(),
+                faker.number().digits(numberForPassportField),
+                LocalDate.now().minus(Period.ofDays((new Random().nextInt(daysOfPeriod)))).toString(),
+                faker.planet().name(),
+                faker.name().maleFirstName(),
+                faker.name().femaleFirstName(),
+                faker.name().maleFirstName(),
+                faker.name().femaleFirstName(),
+                faker.name().lastName(),
+                faker.name().firstName(),
+                faker.name().lastName(),
+                faker.name().name(),
+                LocalDate.now().minus(Period.ofDays((new Random().nextInt(days)))).toString(),
+                faker.number().digits(numberForPassportField),
+                faker.gender().types(),
+                faker.address().streetAddress(),
+                LocalDate.now().minus(Period.ofDays((new Random().nextInt(daysOfPeriod)))).toString(),
+                LocalDate.now().minus(Period.ofDays((new Random().nextInt(numberForPassportField)))).toString(),
+                faker.address().cityName());
+        System.out.println("Request " + request);
     }
     @Test
     public void createUserRequestTest() {
         PostUserResponse response = RequestProvider.postUserRequest(ApiConfig.requestSpecification(),
-                ApiConfig.responseSpecification(), ApiEndpoints.POST_USER_ENDPOINT, PostUserResponse.class);
+                ApiConfig.responseSpecification(), ApiEndpoints.POST_USER_ENDPOINT, request, PostUserResponse.class);
 
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertNotNull(response.getRequestId());
+        softAssert.assertNotNull(response.getData(), "Data list is null");
+        softAssert.assertAll();
     }
 }

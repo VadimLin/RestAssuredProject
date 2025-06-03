@@ -3,6 +3,7 @@ package org.senla.eu.client;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import lombok.experimental.UtilityClass;
+import org.senla.eu.dto.PostUserRequest;
 
 import static io.restassured.RestAssured.given;
 
@@ -45,12 +46,13 @@ public class RequestProvider {
     }
     public static <T> T postUserRequest(RequestSpecification requestSpecification,
                                         ResponseSpecification responseSpecification,
-                                        String path,
+                                        String path, PostUserRequest request,
                                         Class<T> clazz) {
         return
                 given()
                         .spec(requestSpecification)
                         .basePath(path)
+                        .body(request)
                 .when()
                         .post()
                 .then()
