@@ -15,7 +15,6 @@ public class RequestProvider {
                                    ResponseSpecification responseSpecification,
                                    String path,
                                    Class<T> clazz) {
-        Object obj;
         return
                 given()
                         .spec(requestSpecification)
