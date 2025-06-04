@@ -6,8 +6,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public record PostProcessRequest(
         @JsonProperty("action")
         String action,
-        @JsonProperty("applid")
+        @JsonProperty("applId")
         Integer applId,
         @JsonProperty("staffid")
-        Integer staffId) {
+        Integer staffid) {
 }

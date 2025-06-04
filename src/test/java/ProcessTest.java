@@ -12,11 +12,11 @@ public class ProcessTest {
     private PostProcessRequest request;
 
     private final int applId = 49898;
-    private final int staffId = 27659;
+    private final int staffid = 27659;
 
     @BeforeTest
     public void setup() {
-        request = new PostProcessRequest("approved", applId, staffId);
+        request = new PostProcessRequest("approved", applId, staffid);
     }
 
     @Test (testName = "Change Status Test")
@@ -32,7 +32,7 @@ public class ProcessTest {
             softAssert.assertNotNull(data.getApplicationId(), "applicationId is not null");
             softAssert.assertNotNull(data.getCitizenId(), "citizenId is not null");
             softAssert.assertNotNull(data.getApplicantId(), "applicantId is not null");
-            softAssert.assertEquals(data.getStaffId(), request.staffId(), "staffId the same as in request");
+            softAssert.assertEquals(data.getStaffid(), request.staffid(), "staffId the same as in request");
             softAssert.assertNotNull(data.getDateOfApplication(), "dateOfApplication is not null");
             softAssert.assertNotNull(data.getKindOfApplication(), "kindOfApplication is not null");
             softAssert.assertAll();

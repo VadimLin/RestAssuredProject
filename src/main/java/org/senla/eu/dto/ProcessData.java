@@ -14,7 +14,7 @@ public class ProcessData {
     @JsonProperty("applicantid")
     private Integer applicantId;
     @JsonProperty("staffid")
-    private Integer staffId;
+    private Integer staffid;
     @JsonProperty("dateofapplication")
     private String dateOfApplication;
     @JsonProperty("kindofapplication")
