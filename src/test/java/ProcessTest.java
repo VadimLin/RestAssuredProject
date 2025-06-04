@@ -12,11 +12,11 @@ public class ProcessTest {
     private PostProcessRequest request;
 
     private final int applId = 49898;
-    private final int staffid = 27659;
+    private final int staffId = 27659;
 
     @BeforeTest
     public void setup() {
-        request = new PostProcessRequest("approved", applId, staffid);
+        request = new PostProcessRequest("approved", applId, staffId);
     }
 
     @Test (testName = "Change Status Test")
