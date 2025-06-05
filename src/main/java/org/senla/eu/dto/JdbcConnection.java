@@ -5,7 +5,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
-import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
 import java.sql.DriverManager;
@@ -17,13 +16,10 @@ public class JdbcConnection {
     private static final Logger LOG = LoggerFactory.getLogger(JdbcConnection.class);
 
     private static Connection con = null;
-    private static Statement stmt = null;
-    private static PreparedStatement pstmt;
+    private static PreparedStatement pstmt = null;
     private static ResultSet rs = null;
 
-    public static ResultSet getRs() {
-        return rs;
-    }
+
 
     public static Connection connectToDB() {
         LOG.info("Connect to DB " + URL + USERNAME);
@@ -40,38 +36,51 @@ public class JdbcConnection {
         return con;
     }
 
-    public static String checkAdminRequestById(Integer staffId) throws SQLException {
+    public static Integer checkAdminRequestById(Integer staffId) throws SQLException {
+        Integer staffIdFromDB;
 
         String selectQuery = "SELECT * FROM reg_office.staff WHERE staffid = ?";
-        String value;
         pstmt = connectToDB().prepareStatement(selectQuery, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
         pstmt.setInt(1, staffId);
 
         LOG.info("Send request to DB: " + pstmt.toString());
         rs = pstmt.executeQuery();
         if (rs.next()) {
-            value = rs.getString("staffId");
+            System.out.println(
+                    "Staff ID: " + rs.getInt("staffid")
+                            + ", Surname: "
+                            + rs.getString("surname")
+                            + ", Passport: "
+                            + rs.getString("passportnumber"));
+            staffIdFromDB = rs.getInt("staffId");
+
         } else {
-            value = null;
+            staffIdFromDB = null;
         }
-        return value;
+        return staffIdFromDB;
     }
 
-    public static String checkChangeStatus(Integer applid) throws SQLException {
+    public static Integer checkStatus(int applid) throws SQLException {
 
         String selectQuery = "SELECT applicationid, citizenid, applicantid, staffid, dateofapplication "
                 + "kindofapplication, statusofapplication, channel FROM reg_office.applications WHERE applicationid = ?";
-        String value;
+        Integer applIdFromDB;
         pstmt = connectToDB().prepareStatement(selectQuery, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
         pstmt.setInt(1, applid);
 
         LOG.info("Send request to DB: " + pstmt.toString());
         rs = pstmt.executeQuery();
         if (rs.next()) {
-            value = rs.getString("applicationid");
+            System.out.println(
+                    "Status from DB: " + rs.getString("statusofapplication")
+                            + ", Staff ID: "
+                            + rs.getInt("staffid")
+                            + ", Application ID: "
+                            + rs.getInt("applicationid"));
+            applIdFromDB = rs.getInt("applicationid");
         } else {
-            value = null;
+            applIdFromDB = null;
         }
-        return value;
+        return applIdFromDB;
     }
 }

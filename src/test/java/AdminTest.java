@@ -8,8 +8,9 @@ import org.senla.eu.dto.PostAdminResponse;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-
 import java.sql.SQLException;
+
+
 import java.time.LocalDate;
 
 public class AdminTest {
@@ -38,6 +39,8 @@ public class AdminTest {
 
     @Test(testName = "Admin Test")
    public void sendAdminRequestTest() throws SQLException {
+       JdbcConnection jdbcConnection = new JdbcConnection();
+
         PostAdminResponse response = RequestProvider.postAdminRequest(
                 ApiConfig.requestSpecification(),
                 ApiConfig.responseSpecification(),
@@ -45,15 +48,15 @@ public class AdminTest {
                 request,
                 PostAdminResponse.class);
 
-        String reqStaffId = String.valueOf(response.getData().get(0).getStaffId());
-        String staffIdFromDB = JdbcConnection.checkAdminRequestById(response.getData().get(0).getStaffId());
+        Integer reqStaffId = (response.getData().get(0).getStaffId());
+        Integer staffIdFromDB = jdbcConnection.checkAdminRequestById(response.getData().get(0).getStaffId());
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertNotNull(response.getRequestId(), "RequestId is not null");
         softAssert.assertFalse(response.getData().isEmpty(), "List data should not be empty");
         softAssert.assertEquals(reqStaffId, staffIdFromDB, "StaffId from response and DB should match");
         softAssert.assertAll();
 
-        JdbcConnection.connectToDB().close();
+        jdbcConnection.connectToDB().close();
 
     }
 

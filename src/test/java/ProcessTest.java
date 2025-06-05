@@ -28,8 +28,9 @@ public class ProcessTest {
                 ApiConfig.responseSpecification(), ApiEndpoints.POST_CHANGE_STATUS_ENDPOINT, request,
                 PostProcessResponse.class);
 
-        String reqApplId = String.valueOf(response.getData().get(0).getApplicationId());
-        String applIdFromDB = JdbcConnection.checkChangeStatus(response.getData().get(0).getApplicationId());
+        int reqApplId = response.getData().get(0).getApplicationId();
+        int applIdFromDB = JdbcConnection.checkStatus(reqApplId);
+
 
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertNotNull(response.getData(), "Field data is not null");
