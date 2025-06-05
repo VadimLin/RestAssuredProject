@@ -1,0 +1,77 @@
+package org.senla.eu.dto;
+
+import org.senla.eu.property.PropertyFile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.sql.Connection;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import java.sql.PreparedStatement;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+public class JdbcConnection {
+    public static final String URL = PropertyFile.getProperty("DB_URL");
+    public static final String USERNAME = PropertyFile.getProperty("DB_USERNAME");
+    public static final String PASSWORD = PropertyFile.getProperty("DB_PASSWORD");
+    private static final Logger LOG = LoggerFactory.getLogger(JdbcConnection.class);
+
+    private static Connection con = null;
+    private static Statement stmt = null;
+    private static PreparedStatement pstmt;
+    private static ResultSet rs = null;
+
+    public static ResultSet getRs() {
+        return rs;
+    }
+
+    public static Connection connectToDB() {
+        LOG.info("Connect to DB " + URL + USERNAME);
+        try {
+            Class.forName("org.postgresql.Driver");
+            con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            LOG.info("Connection to DB successful!");
+        } catch (SQLException e) {
+            LOG.error("Connection to DB failed!" + e.getMessage());
+        } catch (ClassNotFoundException e) {
+            LOG.error(e.getMessage());
+        }
+
+        return con;
+    }
+
+    public static String checkAdminRequestById(Integer staffId) throws SQLException {
+
+        String selectQuery = "SELECT * FROM reg_office.staff WHERE staffid = ?";
+        String value;
+        pstmt = connectToDB().prepareStatement(selectQuery, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        pstmt.setInt(1, staffId);
+
+        LOG.info("Send request to DB: " + pstmt.toString());
+        rs = pstmt.executeQuery();
+        if (rs.next()) {
+            value = rs.getString("staffId");
+        } else {
+            value = null;
+        }
+        return value;
+    }
+
+    public static String checkChangeStatus(Integer applid) throws SQLException {
+
+        String selectQuery = "SELECT applicationid, citizenid, applicantid, staffid, dateofapplication "
+                + "kindofapplication, statusofapplication, channel FROM reg_office.applications WHERE applicationid = ?";
+        String value;
+        pstmt = connectToDB().prepareStatement(selectQuery, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        pstmt.setInt(1, applid);
+
+        LOG.info("Send request to DB: " + pstmt.toString());
+        rs = pstmt.executeQuery();
+        if (rs.next()) {
+            value = rs.getString("applicationid");
+        } else {
+            value = null;
+        }
+        return value;
+    }
+}
