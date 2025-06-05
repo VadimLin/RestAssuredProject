@@ -46,7 +46,7 @@ public class ProcessTest {
             softAssert.assertEquals(reqApplId, applIdFromDB, "ApplId from response and DB should match");
             softAssert.assertAll();
 
-            JdbcConnection.connectToDB().close();
+            jdbcConnection.connectToDB().close();
        }
     }
 }
