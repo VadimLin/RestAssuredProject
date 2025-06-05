@@ -30,7 +30,7 @@ public class ProcessTest {
                 PostProcessResponse.class);
 
         int reqApplId = response.getData().get(0).getApplicationId();
-        int applIdFromDB = jdbcConnection.checkStatus(reqApplId);
+        int applIdFromDB = JdbcTest.checkStatus(reqApplId);
 
 
         SoftAssert softAssert = new SoftAssert();

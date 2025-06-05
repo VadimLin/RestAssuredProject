@@ -49,7 +49,7 @@ public class AdminTest {
                 PostAdminResponse.class);
 
         Integer reqStaffId = (response.getData().get(0).getStaffId());
-        Integer staffIdFromDB = jdbcConnection.checkAdminRequestById(response.getData().get(0).getStaffId());
+        Integer staffIdFromDB = JdbcTest.checkAdminRequestById(response.getData().get(0).getStaffId());
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertNotNull(response.getRequestId(), "RequestId is not null");
         softAssert.assertFalse(response.getData().isEmpty(), "List data should not be empty");
