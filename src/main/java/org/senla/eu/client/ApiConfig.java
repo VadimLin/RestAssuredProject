@@ -13,7 +13,7 @@ import org.senla.eu.property.PropertyFile;
 @UtilityClass
 public class ApiConfig {
 
-    public static RequestSpecification requestSpecification() {
+    public  RequestSpecification requestSpecification() {
         return new RequestSpecBuilder()
                 .setBaseUri(PropertyFile.getProperty("BASEURI"))
                 .setAuth(RestAssured.basic(PropertyFile.getProperty("USERNAME"), PropertyFile.getProperty("PASSWORD")))
@@ -22,7 +22,7 @@ public class ApiConfig {
                 .build();
     }
 
-    public static ResponseSpecification responseSpecification() {
+    public  ResponseSpecification responseSpecification() {
 
          final int successfulResponseCode = 200;
         return new ResponseSpecBuilder()

@@ -1,8 +1,7 @@
 package org.senla.eu.client;
 
-import lombok.Getter;
 
-@Getter
+
 public class ApiEndpoints {
     public static final String GET_APPLICATION_ENDPOINT = "/getApplications";
     public static final String POST_ADMIN_ENDPOINT = "/sendAdminRequest";
