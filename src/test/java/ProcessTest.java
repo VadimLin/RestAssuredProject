@@ -24,12 +24,13 @@ public class ProcessTest {
 
     @Test (testName = "Change Status Test")
     public void processTest() throws SQLException {
+        JdbcConnection jdbcConnection = new JdbcConnection();
         PostProcessResponse response = RequestProvider.postAdminRequest(ApiConfig.requestSpecification(),
                 ApiConfig.responseSpecification(), ApiEndpoints.POST_CHANGE_STATUS_ENDPOINT, request,
                 PostProcessResponse.class);
 
         int reqApplId = response.getData().get(0).getApplicationId();
-        int applIdFromDB = JdbcConnection.checkStatus(reqApplId);
+        int applIdFromDB = jdbcConnection.checkStatus(reqApplId);
 
 
         SoftAssert softAssert = new SoftAssert();
