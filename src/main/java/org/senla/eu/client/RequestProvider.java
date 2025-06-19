@@ -11,7 +11,7 @@ import static io.restassured.RestAssured.given;
 @UtilityClass
 public class RequestProvider {
 
-    public static <T> T getRequest(RequestSpecification requestSpecification,
+    public  <T> T getRequest(RequestSpecification requestSpecification,
                                    ResponseSpecification responseSpecification,
                                    String path,
                                    Class<T> clazz) {
@@ -26,7 +26,7 @@ public class RequestProvider {
                         .extract()
                         .as(clazz);
 }
-    public static <T> T postAdminRequest(RequestSpecification requestSpecification,
+    public  <T> T postAdminRequest(RequestSpecification requestSpecification,
                                          ResponseSpecification responseSpecification,
                                          String path,
                                          Object request,
@@ -43,7 +43,7 @@ public class RequestProvider {
                         .extract()
                         .as(clazz);
     }
-    public static <T> T postUserRequest(RequestSpecification requestSpecification,
+    public  <T> T postUserRequest(RequestSpecification requestSpecification,
                                         ResponseSpecification responseSpecification,
                                         String path, PostUserRequest request,
                                         Class<T> clazz) {

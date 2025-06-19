@@ -37,6 +37,7 @@ dependencies {
     testImplementation 'com.puppycrawl.tools:checkstyle:10.24.0'
     compileOnly 'com.puppycrawl.tools:checkstyle:10.24.0'
     runtimeOnly 'com.puppycrawl.tools:checkstyle:10.24.0'
+    implementation"org.postgresql:postgresql:42.1.4"
 }
 
 
