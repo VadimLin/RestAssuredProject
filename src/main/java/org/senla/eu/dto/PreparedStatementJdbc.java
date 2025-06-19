@@ -1,3 +1,5 @@
+package org.senla.eu.dto;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -5,8 +7,7 @@ import java.sql.SQLException;
 
 import static org.senla.eu.dto.JdbcConnection.connectToDB;
 
-public class JdbcTest {
-
+public class PreparedStatementJdbc {
     private static Connection con = null;
     private static PreparedStatement pstmt = null;
     private static ResultSet rs = null;

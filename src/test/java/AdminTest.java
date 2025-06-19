@@ -5,6 +5,7 @@ import org.senla.eu.client.RequestProvider;
 import org.senla.eu.dto.JdbcConnection;
 import org.senla.eu.dto.PostAdminRequest;
 import org.senla.eu.dto.PostAdminResponse;
+import org.senla.eu.dto.PreparedStatementJdbc;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -49,7 +50,7 @@ public class AdminTest {
                 PostAdminResponse.class);
 
         Integer reqStaffId = (response.getData().get(0).getStaffId());
-        Integer staffIdFromDB = JdbcTest.checkAdminRequestById(response.getData().get(0).getStaffId());
+        Integer staffIdFromDB = PreparedStatementJdbc.checkAdminRequestById(response.getData().get(0).getStaffId());
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertNotNull(response.getRequestId(), "RequestId is not null");
         softAssert.assertFalse(response.getData().isEmpty(), "List data should not be empty");

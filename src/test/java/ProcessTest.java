@@ -1,9 +1,10 @@
 import org.senla.eu.client.ApiConfig;
 import org.senla.eu.client.ApiEndpoints;
 import org.senla.eu.client.RequestProvider;
-import org.senla.eu.dto.JdbcConnection;
 import org.senla.eu.dto.PostProcessRequest;
+import org.senla.eu.dto.JdbcConnection;
 import org.senla.eu.dto.PostProcessResponse;
+import org.senla.eu.dto.PreparedStatementJdbc;
 import org.senla.eu.dto.ProcessData;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -30,7 +31,7 @@ public class ProcessTest {
                 PostProcessResponse.class);
 
         int reqApplId = response.getData().get(0).getApplicationId();
-        int applIdFromDB = JdbcTest.checkStatus(reqApplId);
+        int applIdFromDB = PreparedStatementJdbc.checkStatus(reqApplId);
 
 
         SoftAssert softAssert = new SoftAssert();
