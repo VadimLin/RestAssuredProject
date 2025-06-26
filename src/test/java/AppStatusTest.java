@@ -29,4 +29,5 @@ public class AppStatusTest {
 
         softAssert.assertAll();
     }
+
 }

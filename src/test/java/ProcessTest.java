@@ -2,11 +2,15 @@ import org.senla.eu.client.ApiConfig;
 import org.senla.eu.client.ApiEndpoints;
 import org.senla.eu.client.RequestProvider;
 import org.senla.eu.dto.PostProcessRequest;
+import org.senla.eu.dto.JdbcConnection;
 import org.senla.eu.dto.PostProcessResponse;
+import org.senla.eu.dto.PreparedStatementJdbc;
 import org.senla.eu.dto.ProcessData;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+
+import java.sql.SQLException;
 
 public class ProcessTest {
     private PostProcessRequest request;
@@ -20,10 +24,15 @@ public class ProcessTest {
     }
 
     @Test (testName = "Change Status Test")
-    public void processTest() {
+    public void processTest() throws SQLException {
+        JdbcConnection jdbcConnection = new JdbcConnection();
         PostProcessResponse response = RequestProvider.postAdminRequest(ApiConfig.requestSpecification(),
                 ApiConfig.responseSpecification(), ApiEndpoints.POST_CHANGE_STATUS_ENDPOINT, request,
                 PostProcessResponse.class);
+
+        int reqApplId = response.getData().get(0).getApplicationId();
+        int applIdFromDB = PreparedStatementJdbc.checkStatus(reqApplId);
+
 
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertNotNull(response.getData(), "Field data is not null");
@@ -35,7 +44,10 @@ public class ProcessTest {
             softAssert.assertEquals(data.getStaffid(), request.staffid(), "staffId the same as in request");
             softAssert.assertNotNull(data.getDateOfApplication(), "dateOfApplication is not null");
             softAssert.assertNotNull(data.getKindOfApplication(), "kindOfApplication is not null");
+            softAssert.assertEquals(reqApplId, applIdFromDB, "ApplId from response and DB should match");
             softAssert.assertAll();
+
+            jdbcConnection.connectToDB().close();
        }
     }
 }
