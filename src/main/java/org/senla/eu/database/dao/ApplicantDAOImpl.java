@@ -81,15 +81,23 @@ public class ApplicantDAOImpl implements ApplicantDao {
             stmt.setString(fourthIndex, applicant.getPassportNumber());
             stmt.setString(fifthIndex, applicant.getPhoneNumber());
             stmt.setString(sixthIndex, applicant.getRegistrationAddress());
+            stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-//
-//    @Override
-//    public void update(Object o, String[] params) {
-//
-//    }
+
+    @Override
+    public void update(Applicant applicant, String[] params) {
+        String sql = "UPDATE reg_office.applicants SET name = ? WHERE applicantid = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, params[0] != null ? params[0] : applicant.getName());
+            stmt.setInt(2, applicant.getApplicantId());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 //
 //    @Override
 //    public void delete(Object o) {

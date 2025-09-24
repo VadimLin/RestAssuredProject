@@ -14,6 +14,7 @@
     <suppress checks="HideUtilityClassConstructor" files=""/>
     <suppress checks="DesignForExtension" files=""/>
     <suppress checks="HiddenField" files=""/>
+    <suppress checks="AvoidInlineConditionals" files=""/>
     <!--    <suppress files="" checks="JavadocMethod"/>-->
     <!--    <suppress files="" checks="JavadocType"/>-->
     <!--    <suppress files="" checks="JavadocVariable"/>-->

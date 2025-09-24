@@ -4,6 +4,7 @@ import org.senla.eu.database.dao.ApplicantDAOImpl;
 import org.senla.eu.database.dao.ApplicantDao;
 import org.senla.eu.database.entity.Applicant;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import java.sql.Connection;
 
@@ -15,6 +16,10 @@ public class DaoTest {
         try (Connection conn = ConnectionPool.getConnection()) {
             ApplicantDao dao = new ApplicantDAOImpl(conn);
           dao.get(id).ifPresent(applicant -> System.out.println("Found " + applicant.getName()));
+
+          SoftAssert softAssert = new SoftAssert();
+          softAssert.assertTrue(dao.get(id).isPresent(),
+                    "Applicant with ID " + id + " should exist in db");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -58,4 +63,21 @@ public class DaoTest {
             }
         }
     }
+    @Test
+    void daoUpdateTest() {
+        Faker faker = new Faker();
+        final int testId = 46082;
+
+        try (Connection conn = ConnectionPool.getConnection()) {
+            ApplicantDao dao = new ApplicantDAOImpl(conn);
+            Applicant originalApplicant = dao.get(testId).orElseThrow();
+            String updatedName = faker.name().firstName() + "_TEST";
+            String[] updateParams = {updatedName};
+            dao.update(originalApplicant, updateParams);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
