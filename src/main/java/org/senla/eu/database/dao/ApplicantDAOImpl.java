@@ -98,9 +98,15 @@ public class ApplicantDAOImpl implements ApplicantDao {
             e.printStackTrace();
         }
     }
-//
-//    @Override
-//    public void delete(Object o) {
-//
-//    }
+
+    @Override
+    public void delete(Applicant applicant) {
+        String sql = "DELETE FROM reg_office.applicants where applicantid = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, applicant.getApplicantId());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

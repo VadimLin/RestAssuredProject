@@ -7,19 +7,33 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.sql.Connection;
+import java.util.List;
+import java.util.Optional;
 
 public class DaoTest {
     @Test
     void daoTest() {
-        final int id = 46082;
+        final int id = 62415;
         //try-with-resources(don't need manual closing)
         try (Connection conn = ConnectionPool.getConnection()) {
             ApplicantDao dao = new ApplicantDAOImpl(conn);
           dao.get(id).ifPresent(applicant -> System.out.println("Found " + applicant.getName()));
-
           SoftAssert softAssert = new SoftAssert();
           softAssert.assertTrue(dao.get(id).isPresent(),
                     "Applicant with ID " + id + " should exist in db");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void daoGetAllTest() {
+        //try-with-resources(don't need manual closing)
+        try (Connection conn = ConnectionPool.getConnection()) {
+            ApplicantDao dao = new ApplicantDAOImpl(conn);
+            List<Applicant> allApplicants = dao.getAll();
+            System.out.println("Total applicants: " + allApplicants.size());
+            allApplicants.forEach(System.out::println);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -50,7 +64,6 @@ public class DaoTest {
                     .registrationAddress(randomAddress)
                     .build();
             dao.save(applicant);
-            System.out.println(applicant);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -66,7 +79,7 @@ public class DaoTest {
     @Test
     void daoUpdateTest() {
         Faker faker = new Faker();
-        final int testId = 46082;
+        final int testId = 62415;
 
         try (Connection conn = ConnectionPool.getConnection()) {
             ApplicantDao dao = new ApplicantDAOImpl(conn);
@@ -74,7 +87,30 @@ public class DaoTest {
             String updatedName = faker.name().firstName() + "_TEST";
             String[] updateParams = {updatedName};
             dao.update(originalApplicant, updateParams);
+            SoftAssert softAssert = new SoftAssert();
+            softAssert.assertTrue(updatedName.contains("_TEST"),
+                    "Applicant should have updated name with " + updatedName);
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void daoDeleteTest() {
+        final int testId = 62414;
+
+        try (Connection conn = ConnectionPool.getConnection()) {
+            ApplicantDao dao = new ApplicantDAOImpl(conn);
+            Optional<Applicant> applicantBeforeDelete = dao.get(testId);
+            SoftAssert softAssert = new SoftAssert();
+            softAssert.assertTrue(applicantBeforeDelete.isPresent(),
+                    "Applicant with ID " + testId + " should exist before deletion");
+            Applicant applicantToDelete = applicantBeforeDelete.get();
+            dao.delete(applicantToDelete);
+            Optional<Applicant> applicantAfterDelete = dao.get(testId);
+            softAssert.assertFalse(applicantAfterDelete.isPresent(),
+                    "Applicant with ID " + testId + " should not exist after deletion");
         } catch (Exception e) {
             e.printStackTrace();
         }
